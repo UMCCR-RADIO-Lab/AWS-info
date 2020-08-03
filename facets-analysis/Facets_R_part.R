@@ -9,9 +9,7 @@ library(facets)
 set.seed(1234)
 
 # This is the output from the C snp pileup
-#datafile <- list.files(path = "snp_pileup_output_folder", pattern = "*.csv.gz",full.names = T)
-# Example file
-#datafile <- system.file("extdata", "stomach.csv.gz", package = "facets")
+datafile <- list.files(path = "snp_pileup_output_folder", pattern = "*.csv.gz",full.names = T)
 
 rcmat <- readSnpMatrix(datafile[[1]])
 
