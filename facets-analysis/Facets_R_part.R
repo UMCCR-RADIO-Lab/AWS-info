@@ -1,7 +1,5 @@
 #!/usr/bin/env Rscript
-install.packages("tidyverse", repos = "http://cran.us.r-project.org")
 
-library(tidyverse)
 library(facets)
 
 # Test run of facets from the vignette for Roman
@@ -44,7 +42,7 @@ seg_file_IGV <- data.frame(Sample = "E233_test", Chrom = facets_table$chrom, Sta
                            Mark = facets_table$num.mark, Seg.CN = facets_table$cnlr.median)
 
 # Seg file that can be opened in IGV
-write_tsv(seg_file_IGV, "E233.seg")
+write.table(seg_file_IGV, "E233.seg",quote = F, row.names = F, sep ="\t")
 
 # The logOR data for a segment are summarized using the square of expected log-odds-ratio (mafR column)
 # mafR = minor allele frequency ratio 
