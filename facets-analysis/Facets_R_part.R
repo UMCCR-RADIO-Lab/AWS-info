@@ -1,3 +1,6 @@
+#!/usr/bin/env Rscript
+install.packages("tidyverse", repos = "http://cran.us.r-project.org")
+
 library(tidyverse)
 library(facets)
 
