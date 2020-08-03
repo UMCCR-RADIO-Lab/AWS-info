@@ -7,7 +7,7 @@
 #s3://umccr-temp-dev/Andrew_parallel_cluster_test/
 
 # Example command
-# bash snp_pileup.sh hg38.fa blood.bam tumour.bam ouput_dir snp_reference snp_pileup_program
+# bash snp_pileup.sh hg19.fa blood.bam tumour.bam ouput_dir snp_reference snp_pileup_program
 
 # hg38.fa etc
 genome_ref=$1
