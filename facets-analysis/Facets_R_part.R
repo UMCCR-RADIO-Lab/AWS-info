@@ -58,4 +58,7 @@ fit$ploidy
 pdf("file.pdf")
 plotSample(x=oo, emfit = fit)
 dev.off()
+
+pdf("spider.pdf")
 logRlogORspider(oo$out, oo$dipLogR)
+dev.off()
