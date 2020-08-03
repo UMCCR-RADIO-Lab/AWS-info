@@ -1,6 +1,15 @@
 #!/usr/bin/env Rscript
 
+# Example command: Rscript /mnt/fsx/Andrew_parallel_cluster_test/ 500
+
 library(facets)
+
+# Read command line args
+args <- commandArgs(trailingOnly = TRUE)
+
+print(paste0("FACETS pileup output dir given is ", args[1]))
+
+print(paste0("cval given is  ", args[2]))
 
 # Test run of facets from the vignette for Roman
 # https://github.com/mskcc/facets/blob/master/vignettes/FACETS.pdf
@@ -9,7 +18,7 @@ library(facets)
 set.seed(1234)
 
 # This is the output from the C snp pileup
-datafile <- list.files(path = "snp_pileup_output_folder", pattern = "*.csv.gz",full.names = T)
+datafile <- list.files(path = args[1], pattern = "*.csv.gz",full.names = T)
 
 rcmat <- readSnpMatrix(datafile[[1]])
 
@@ -18,7 +27,7 @@ xx = preProcSample(rcmat)
 
 # Process a sample
 # Lower cval leads to higher sensitivity for small changes.
-oo <- procSample(xx, cval = 500)
+oo <- procSample(xx, cval = args[2])
 
 # The log ratio for a diploid location in this tumour sample
 oo$dipLogR
@@ -53,7 +62,7 @@ fit$ploidy
 # At each position, logR is defined by the log-ratio of total read depth 
 # in the tumor versus that in the normal and logOR is defined by the log-odds 
 # ratio of the variant allele count in the tumor versus in the normal.
-pdf("file.pdf")
+pdf("FACETS_plot.pdf")
 plotSample(x=oo, emfit = fit)
 dev.off()
 
