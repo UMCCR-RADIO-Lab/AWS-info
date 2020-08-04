@@ -1,8 +1,6 @@
 #!/bin/bash -x
-export TMP_DIR="/scratch"
-export JAVA_OPTS="-Xmx8G"
-docker_cmd_prefix="docker run -it -v /scratch:/scratch -v /mnt/data:/mnt/data -v /mnt/refdata:/mnt/refdata -v /mnt/out:/mnt/out --env TMP_DIR--env JAVA_OPTS --memory=8G"
-picard="$docker_cmd_prefix quay.io/biocontainers/picard:2.23.3--0 picard"
+docker_cmd_prefix="docker run -it -v /scratch:/scratch -v /mnt/data:/mnt/data -v /mnt/refdata:/mnt/refdata -v /mnt/out:/mnt/out --env=TMP_DIR --env=JAVA_OPTS --memory=8G"
+picard="$docker_cmd_prefix quay.io/biocontainers/picard:2.23.3--0 picard $PICARD_JAVA_OPTIONS"
 snp_pileup="$docker_cmd_prefix quay.io/biocontainers/snp-pileup:0.5.14--hfbaaabd_3 snp-pileup"
 
 # Example command
