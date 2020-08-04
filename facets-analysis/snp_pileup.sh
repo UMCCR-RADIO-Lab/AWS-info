@@ -26,4 +26,4 @@ $picard ReorderSam -I $BCBio_blood_bam -O $outdir/`basename $BCBio_blood_bam`.or
 mkdir -p $outdir
 
 # SNP pileup from here: https://github.com/mskcc/facets/tree/master/inst/extcode
-$snp_pileup -g -q 30 -Q 30 -r 10,10 $SNP_reference $outdir/$BCBio_tumour_bam.csv.gz $outdir/$BCBio_blood_bam.ordered.bam $outdir/$BCBio_tumour_bam.ordered.bam
+$snp_pileup -g -q 30 -Q 30 -r 10,10 $SNP_reference $outdir/`basename $BCBio_tumour_bam.csv.gz` $outdir/`basename $BCBio_blood_bam.ordered.bam` $outdir/`basename $BCBio_tumour_bam.ordered.bam`
