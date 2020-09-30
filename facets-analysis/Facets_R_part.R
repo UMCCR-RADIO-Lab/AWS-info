@@ -59,6 +59,11 @@ write.table(seg_file_IGV, "E233.seg",quote = F, row.names = F, sep ="\t")
 fit$purity
 fit$ploidy
 
+# Save purity and ploidy
+pp_df <- data.frame(Purity = fit$purity, Ploidy = fit$ploidy)
+
+write.csv(pp_df, "Purity_ploidy.csv",quote = F,row.names = F)
+
 # At each position, logR is defined by the log-ratio of total read depth 
 # in the tumor versus that in the normal and logOR is defined by the log-odds 
 # ratio of the variant allele count in the tumor versus in the normal.
