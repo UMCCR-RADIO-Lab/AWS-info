@@ -1,5 +1,8 @@
 #!/bin/bash -x
-docker_cmd_prefix="docker run -it -v /efs/scratch:/efs/scratch -v /efs/data:/efs/data -v /efs/refdata:/efs/refdata -v /efs/out:/efs/out --env=TMP_DIR --env=JAVA_OPTS --memory=8G"
+# Do not use `-it` on docker run, otherwise:
+# https://stackoverflow.com/questions/43099116/error-the-input-device-is-not-a-tty
+docker_cmd_prefix="docker run -v /efs/scratch:/efs/scratch -v /efs/data:/efs/data -v /efs/refdata:/efs/refdata -v /efs/out:/efs/out --env=TMP_DIR --env=JAVA_OPTS --memory=8G"
+
 snp_pileup="$docker_cmd_prefix quay.io/biocontainers/snp-pileup:0.5.14--hfbaaabd_3 snp-pileup"
 samtools="$docker_cmd_prefix quay.io/biocontainers/samtools:1.10--h9402c20_2 samtools"
 
