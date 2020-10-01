@@ -1,8 +1,8 @@
 #!/bin/bash -x
 # Do not use `-it` on docker run, otherwise:
 # https://stackoverflow.com/questions/43099116/error-the-input-device-is-not-a-tty
+export TMP_DIR="/efs/scratch"
 docker_cmd_prefix="docker run -v /efs/scratch:/efs/scratch -v /efs/data:/efs/data -v /efs/refdata:/efs/refdata -v /efs/out:/efs/out --env=TMP_DIR --env=JAVA_OPTS --memory=8G"
-
 snp_pileup="$docker_cmd_prefix quay.io/biocontainers/snp-pileup:0.5.14--hfbaaabd_3 snp-pileup"
 samtools="$docker_cmd_prefix quay.io/biocontainers/samtools:1.10--h9402c20_2 samtools"
 
@@ -21,12 +21,19 @@ outdir=$4
 #00-All.vcf.gz
 SNP_reference=$5
 
-# BCBio has output files in the wrong order that FACETS wants for some reason. 
-# Samtools sort with 10 threads to hopefully fix this
-$samtools sort -@ 10 -o $outdir/`basename $BCBio_tumour_bam`.ordered.bam $BCBio_tumour_bam
-$samtools sort -@ 10 -o $outdir/`basename $BCBio_blood_bam`.ordered.bam $BCBio_blood_bam
+echo $BCBio_blood_bam
+echo $BCBio_tumour_bam
 
+base_blood=$(basename $BCBio_blood_bam)
+base_tumour=$(basename $BCBio_tumour_bam)
+
+# Make the outdir if it doesn't exist
 mkdir -p $outdir
 
+# BCBio has output files in the wrong order that FACETS wants for some reason.
+# Samtools sort with 10 threads to hopefully fix this
+$samtools sort -@ 10 -T /efs/scratch/$BCBio_tumour_bam_tmp $BCBio_tumour_bam -O BAM -o $outdir/$base_tumour.ordered.bam
+$samtools sort -@ 10 -T /efs/scratch/$BCBio_blood_bam_tmp $BCBio_blood_bam -O BAM -o $outdir/$base_blood.ordered.bam
+
 # SNP pileup from here: https://github.com/mskcc/facets/tree/master/inst/extcode
-$snp_pileup -g -q 30 -Q 30 -r 10,10 $SNP_reference $outdir/`basename $BCBio_tumour_bam.csv.gz` $outdir/`basename $BCBio_blood_bam.ordered.bam` $outdir/`basename $BCBio_tumour_bam.ordered.bam`
+$snp_pileup -g -q 30 -Q 30 -r 10,10 $SNP_reference $outdir/$base_tumour.vcf $outdir/$base_blood.ordered.bam $outdir/$base_tumour.ordered.bam
