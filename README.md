@@ -21,9 +21,9 @@ Using AWS EFS instead, staging the data needed previously:
 ```shell
 $ time ./snp_pileup.sh \
         /efs/refdata/hg38.fa \
-        /efs/data/PRJ190494_FL-2B-ready.bam \
-        /efs/data/PRJ190493_FL-2T-ready.bam \
-        /efs/out /efs/data/00-common_all.vcf.gz
+        /efs/data/SEQC-II_Normal-ready.bam \
+        /efs/data/SEQC-II_Tumor_50pc-ready.bam \
+        /efs/out /efs/refdata/All_20170710.vcf.gz
 
 $ export docker_cmd_prefix="docker run -it -v /efs/scratch:/efs/scratch -v /efs/data:/efs/data -v /efs/refdata:/efs/refdata -v /efs/out:/efs/out --env TMP_DIR"
 $ $docker_cmd_prefix quay.io/biocontainers/r-facets:0.5.14--r40he991be0_3 ./Facets_R_part.R

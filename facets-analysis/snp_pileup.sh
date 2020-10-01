@@ -1,7 +1,7 @@
 #!/bin/bash -x
-docker_cmd_prefix="docker run -it -v /scratch:/scratch -v /mnt/data:/mnt/data -v /mnt/refdata:/mnt/refdata -v /mnt/out:/mnt/out --env=TMP_DIR --env=JAVA_OPTS --memory=8G"
+docker_cmd_prefix="docker run -it -v /efs/scratch:/efs/scratch -v /efs/data:/efs/data -v /efs/refdata:/efs/refdata -v /efs/out:/efs/out --env=TMP_DIR --env=JAVA_OPTS --memory=8G"
 snp_pileup="$docker_cmd_prefix quay.io/biocontainers/snp-pileup:0.5.14--hfbaaabd_3 snp-pileup"
-# Need to load in samtools
+samtools="$docker_cmd_prefix quay.io/biocontainers/samtools:1.10--h9402c20_2 samtools"
 
 # Example command
 # bash snp_pileup.sh hg19.fa blood.bam tumour.bam ouput_dir snp_reference
