@@ -5,6 +5,6 @@
 
 time ./snp_pileup.sh \
         /efs/refdata/hg38.fa \
-        /efs/data/PRJ190494_FL-2B-ready.bam \
-        /efs/data/PRJ190493_FL-2T-ready.bam \
-        /efs/out /efs/data/00-common_all.vcf.gz
+        /efs/data/SEQC-II_Normal-ready.bam \
+        /efs/data/SEQC-II_Tumor_50pc-ready.bam \
+        /efs/out /efs/refdata/All_20170710.vcf.gz
