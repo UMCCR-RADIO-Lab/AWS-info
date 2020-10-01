@@ -28,3 +28,18 @@ $ time ./snp_pileup.sh \
 $ export docker_cmd_prefix="docker run -it -v /efs/scratch:/efs/scratch -v /efs/data:/efs/data -v /efs/refdata:/efs/refdata -v /efs/out:/efs/out --env TMP_DIR"
 $ $docker_cmd_prefix quay.io/biocontainers/r-facets:0.5.14--r40he991be0_3 ./Facets_R_part.R
 ```
+
+# Quickstart
+
+Just submit jobs as if you were on, legacy HPC setup running SLURM while observing your EC2 compute nodes spawning:
+
+```shell
+$ sbatch submit.sh
+Submitted batch job 2
+$ squeue -h
+                 2   compute submit.s ec2-user CF       1:56      1 compute-dy-c54xlarge-1
+```
+
+At the same time, remember that you are the king of your own cluster so Docker is installed and you can select [Docker images](https://github.com/umccr/infrastructure/blob/master/parallel_cluster/ami/biocontainers.yml#L23)... see how they are used in the scripts.
+
+TODO: Ideally those docker containers could be aliased and volume-mounted to accomodate traditional HPC user transition (see `$docker_cmd` for an example on the scripts)?
