@@ -18,7 +18,7 @@ print(paste0("cval given is  ", args[2]))
 set.seed(1234)
 
 # This is the output from the C snp pileup
-datafile <- list.files(path = args[1], pattern = "*.csv.gz",full.names = T)
+datafile <- list.files(path = args[1], pattern = "*.vcf.gz",full.names = T)
 
 rcmat <- readSnpMatrix(datafile[[1]])
 
