@@ -35,4 +35,4 @@ samtools sort -@ 16 -T /efs/scratch/$BCBio_tumour_bam_tmp $BCBio_tumour_bam -O B
 samtools sort -@ 16 -T /efs/scratch/$BCBio_blood_bam_tmp $BCBio_blood_bam -O BAM -o $outdir/$base_blood.ordered.bam
 
 # SNP pileup from here: https://github.com/mskcc/facets/tree/master/inst/extcode
-snp-pileup -g -q 30 -Q 30 -r 10,10 $SNP_reference $outdir/$base_tumour.vcf $outdir/$base_blood.ordered.bam $outdir/$base_tumour.ordered.bam
+snp-pileup -g -q 30 -Q 30 -r 10,10 $SNP_reference $outdir/$base_tumour.csv $outdir/$base_blood.ordered.bam $outdir/$base_tumour.ordered.bam
