@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-# Example command: Rscript /mnt/fsx/Andrew_parallel_cluster_test/ 500
+# Example command: Rscript /mnt/fsx/Andrew_parallel_cluster_test/ 500 samplename
 
 library(facets)
 
@@ -8,8 +8,9 @@ library(facets)
 args <- commandArgs(trailingOnly = TRUE)
 
 print(paste0("FACETS pileup output dir given is ", args[1]))
-
 print(paste0("cval given is  ", args[2]))
+print(paste0("outputting to  ", args[1]))
+print(paste0("sample is called  ", args[3]))
 
 # Test run of facets from the vignette for Roman
 # https://github.com/mskcc/facets/blob/master/vignettes/FACETS.pdf
@@ -45,11 +46,11 @@ head(fit$cncf)
 
 facets_table <- fit$cncf
 
-seg_file_IGV <- data.frame(Sample = "E233_test", Chrom = facets_table$chrom, Start = facets_table$start, Stop = facets_table$end,
+seg_file_IGV <- data.frame(Sample = args[3], Chrom = facets_table$chrom, Start = facets_table$start, Stop = facets_table$end,
                            Mark = facets_table$num.mark, Seg.CN = facets_table$cnlr.median)
 
 # Seg file that can be opened in IGV
-write.table(seg_file_IGV, "E233.seg",quote = F, row.names = F, sep ="\t")
+write.table(seg_file_IGV, paste0(args[1], "/", args[3], ".seg"),quote = F, row.names = F, sep ="\t")
 
 # The logOR data for a segment are summarized using the square of expected log-odds-ratio (mafR column)
 # mafR = minor allele frequency ratio 
@@ -62,15 +63,15 @@ fit$ploidy
 # Save purity and ploidy
 pp_df <- data.frame(Purity = fit$purity, Ploidy = fit$ploidy)
 
-write.csv(pp_df, "Purity_ploidy.csv",quote = F,row.names = F)
+write.csv(pp_df, paste0(args[1], "/", args[3],  "_purity_ploidy.csv"),quote = F,row.names = F)
 
 # At each position, logR is defined by the log-ratio of total read depth 
 # in the tumor versus that in the normal and logOR is defined by the log-odds 
 # ratio of the variant allele count in the tumor versus in the normal.
-pdf("FACETS_plot.pdf")
+pdf(paste0(args[1], "/", args[3], "_FACETS_plot.pdf"))
 plotSample(x=oo, emfit = fit)
 dev.off()
 
-pdf("spider.pdf")
+pdf(paste0(args[1], "/", args[3], "_spider.pdf"))
 logRlogORspider(oo$out, oo$dipLogR)
 dev.off()

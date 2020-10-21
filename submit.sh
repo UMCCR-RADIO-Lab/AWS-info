@@ -17,4 +17,4 @@ bash facets-analysis/snp_pileup.sh \
 	/efs/refdata/All_20170710.vcf.gz
 
 
-time Rscript facets-analysis/Facets_R_part.R /efs/out/ 500
+time Rscript facets-analysis/Facets_R_part.R /efs/out/ 500 test_sample
